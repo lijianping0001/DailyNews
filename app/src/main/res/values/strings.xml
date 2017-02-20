@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">每日资讯</string>
+
+
+    <string name="news">新闻</string>
+    <string name="wechat_daily">微信精选</string>
+    <string name="joke">段子</string>
+    <string name="beauty_image">妹子图</string>
+
+    <string name="app_desc">一款了解资讯的App</string>
+    <string name="load_failed">当前网络不给力，请稍后再试</string>
+    <string name="empty_data">没有获取到数据，请刷新后重试</string>
 </resources>

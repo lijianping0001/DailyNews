@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group>
+        <item
+            android:id="@+id/nav_news"
+            android:checkable="true"
+            android:checked="true"
+            android:icon="@drawable/icon_news"
+            android:title="@string/news" />
+        <item
+            android:id="@+id/nav_wechat"
+            android:checkable="false"
+            android:icon="@drawable/icon_wechat"
+            android:title="@string/wechat_daily" />
+        <item
+            android:id="@+id/nav_joke"
+            android:checkable="false"
+            android:icon="@drawable/icon_joke"
+            android:title="@string/joke" />
+
+        <item
+            android:id="@+id/nav_image"
+            android:checkable="false"
+            android:icon="@drawable/icon_image"
+            android:title="@string/beauty_image" />
+
+
+    </group>
+</menu>
