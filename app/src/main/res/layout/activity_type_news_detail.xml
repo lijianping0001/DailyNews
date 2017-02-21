@@ -88,67 +88,83 @@
         </FrameLayout>
     </android.support.v4.widget.NestedScrollView>
 
-    <LinearLayout
-        android:id="@+id/ll_type_news_detail_bottom"
+    <FrameLayout
+        android:id="@+id/fl_type_news_detail_bottom"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="55dp"
         android:layout_gravity="bottom"
-        android:orientation="horizontal"
         android:background="@android:color/white">
 
-        <android.support.v4.widget.Space
-            android:layout_width="0dp"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:padding="5dp"
+            android:layout_height="match_parent">
+
+            <android.support.v4.widget.Space
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="2"/>
+
+            <TextView
+                android:id="@+id/tv_type_news_detail_write"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/secondary_text"
+                android:drawableTop="@drawable/icon_write_comment"
+                android:drawablePadding="3dp"
+                android:text="@string/write_comment"/>
+
+            <android.support.v4.widget.Space
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="3"/>
+
+            <TextView
+                android:id="@+id/tv_type_news_detail_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/secondary_text"
+                android:drawableTop="@drawable/icon_comment"
+                android:drawablePadding="3dp"
+                android:text="128"/>
+
+            <android.support.v4.widget.Space
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="3"/>
+
+            <TextView
+                android:id="@+id/tv_type_news_detail_like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/secondary_text"
+                android:drawableTop="@drawable/like_selector"
+                android:drawablePadding="3dp"
+                android:text="@string/store"/>
+
+            <android.support.v4.widget.Space
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="2"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_weight="2"/>
+            android:background="@color/divider"/>
 
-        <TextView
-            android:id="@+id/tv_type_news_detail_like"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/secondary_text"
-            android:drawableTop="@drawable/icon_joke"
-            android:drawablePadding="3dp"
-            android:text="点赞"/>
 
-        <android.support.v4.widget.Space
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="3"/>
-
-        <TextView
-            android:id="@+id/tv_type_news_detail_comment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/secondary_text"
-            android:drawableTop="@drawable/icon_joke"
-            android:drawablePadding="3dp"
-            android:text="评论"/>
-
-        <android.support.v4.widget.Space
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="3"/>
-
-        <TextView
-            android:id="@+id/tv_type_news_detail_share"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/secondary_text"
-            android:drawableTop="@drawable/icon_joke"
-            android:drawablePadding="3dp"
-            android:text="分享"/>
-
-        <android.support.v4.widget.Space
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="2"/>
-    </LinearLayout>
+    </FrameLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_type_news_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
+        android:padding="3dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/icon_share"
         app:elevation="5dp"
         app:pressedTranslationZ="12dp"
         app:layout_anchor="@id/apl_type_news_detail"

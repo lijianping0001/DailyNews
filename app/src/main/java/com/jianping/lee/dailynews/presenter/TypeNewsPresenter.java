@@ -4,7 +4,10 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.jianping.lee.dailynews.R;
+import com.jianping.lee.dailynews.base.ConstConfig;
 import com.jianping.lee.dailynews.base.RxPresenter;
+import com.jianping.lee.dailynews.engine.RxBus;
+import com.jianping.lee.dailynews.model.UserEvent;
 import com.jianping.lee.dailynews.model.http.Api;
 import com.jianping.lee.dailynews.model.http.HttpService;
 import com.jianping.lee.dailynews.presenter.contract.TypeNewsContract;
@@ -13,6 +16,8 @@ import com.jianping.lee.dailynews.utils.LogUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import rx.Subscription;
+import rx.functions.Action1;
 
 /**
  * Created by Li on 2017/2/14.
@@ -21,6 +26,19 @@ public class TypeNewsPresenter extends RxPresenter<TypeNewsContract.View> implem
 
     public TypeNewsPresenter(@NonNull Context context){
         this.mContext = context;
+        init();
+    }
+
+    private void init() {
+        Subscription subscription = RxBus.getDefault().toObservable(UserEvent.class)
+                .subscribe(new Action1<UserEvent>() {
+                    @Override
+                    public void call(UserEvent userEvent) {
+                        if (ConstConfig.NEWS_TO_TOP.equals(userEvent.getId())){
+                            mAttachView.listGoTop();
+                        }
+                    }
+                });
     }
 
     @Override

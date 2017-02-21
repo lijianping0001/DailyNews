@@ -1,9 +1,9 @@
 package com.jianping.lee.dailynews.ui.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.NestedScrollView;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -12,19 +12,23 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jianping.lee.dailynews.R;
 import com.jianping.lee.dailynews.base.BaseActivity;
-import com.jianping.lee.dailynews.engine.ImageLoader;
+import com.jianping.lee.dailynews.engine.ImageLoaderProxy;
 import com.jianping.lee.dailynews.presenter.TypeNewsDetailPresenter;
 import com.jianping.lee.dailynews.presenter.contract.TypeNewsDetailContract;
+import com.jianping.lee.dailynews.utils.ScreenUtils;
+import com.jianping.lee.dailynews.utils.StatusBarUtils;
 
 import net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout;
 
 import butterknife.InjectView;
+import butterknife.OnClick;
 
 public class TypeNewsDetailActivity extends BaseActivity<TypeNewsDetailPresenter> implements TypeNewsDetailContract.View {
 
@@ -46,29 +50,28 @@ public class TypeNewsDetailActivity extends BaseActivity<TypeNewsDetailPresenter
     @InjectView(R.id.nsv_type_news_detail)
     NestedScrollView nsvScroller;
 
-    @InjectView(R.id.tv_type_news_detail_like)
-    TextView tvBottomLike;
+    @InjectView(R.id.tv_type_news_detail_write)
+    TextView tvWriteComment;
 
     @InjectView(R.id.tv_type_news_detail_comment)
     TextView tvBottomComment;
 
-    @InjectView(R.id.tv_type_news_detail_share)
-    TextView tvShare;
+    @InjectView(R.id.tv_type_news_detail_like)
+    TextView tvBottomLike;
 
-    @InjectView(R.id.ll_type_news_detail_bottom)
-    LinearLayout llDetailBottom;
+    @InjectView(R.id.fl_type_news_detail_bottom)
+    FrameLayout flDetailBottom;
 
     @InjectView(R.id.fab_type_news_detail)
-    FloatingActionButton fabLike;
+    FloatingActionButton fabShare;
 
     boolean bottomShow = true;
     boolean imageShow = true;
     boolean transitionEnd = false;
-    boolean noTransition = false;
 
-    private String imgUrl;
-    private String title;
-
+    private String mImgUrl;
+    private String mTitle;
+    private String mUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,16 +81,24 @@ public class TypeNewsDetailActivity extends BaseActivity<TypeNewsDetailPresenter
         initView();
     }
 
+    @Override
+    protected void setStatusBar() {
+        //不是全屏设置状态栏为透明
+        if (!ScreenUtils.isFullScreen(this)){
+            StatusBarUtils.setTransparent(this);
+        }
+    }
+
     private void initView() {
         toolbar.setTitleTextColor(Color.WHITE);
         setToolBar(toolbar, "");
-        String url = getIntent().getStringExtra("url");
-        imgUrl = getIntent().getStringExtra("imgUrl");
-        title = getIntent().getStringExtra("title");
-        ctlToolbar.setTitle(title);
+        mUrl = getIntent().getStringExtra("url");
+        mImgUrl = getIntent().getStringExtra("imgUrl");
+        mTitle = getIntent().getStringExtra("title");
+        ctlToolbar.setTitle(mTitle);
         WebSettings settings = wvContent.getSettings();
         settings.setCacheMode(WebSettings.LOAD_DEFAULT);
-        wvContent.loadUrl(url);
+        wvContent.loadUrl(mUrl);
         wvContent.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -105,10 +116,10 @@ public class TypeNewsDetailActivity extends BaseActivity<TypeNewsDetailPresenter
                 //下移隐藏
                 if (scrollY - oldScrollY > 0 && bottomShow) {
                     bottomShow = false;
-                    llDetailBottom.animate().translationY(llDetailBottom.getHeight());
+                    flDetailBottom.animate().translationY(flDetailBottom.getHeight());
                 } else if (scrollY - oldScrollY < 0 && !bottomShow) {//上移出现
                     bottomShow = true;
-                    llDetailBottom.animate().translationY(0);
+                    flDetailBottom.animate().translationY(0);
                 }
             }
         });
@@ -123,9 +134,9 @@ public class TypeNewsDetailActivity extends BaseActivity<TypeNewsDetailPresenter
             public void onTransitionEnd(Transition transition) {
 
                 transitionEnd = true;
-                if (!TextUtils.isEmpty(imgUrl)) {
+                if (!TextUtils.isEmpty(mImgUrl)) {
                     imageShow = true;
-                    ImageLoader.load(mContext, imgUrl, ivBgImage);
+                    ImageLoaderProxy.load(mContext, mImgUrl, ivBgImage);
                 }
             }
 
@@ -144,6 +155,30 @@ public class TypeNewsDetailActivity extends BaseActivity<TypeNewsDetailPresenter
 
             }
         });
+    }
+
+    /**
+     * 收藏
+     */
+    @OnClick(R.id.tv_type_news_detail_like)
+    void onClickLike(){
+        if (tvBottomLike.isSelected()){
+            tvBottomLike.setSelected(false);
+        }else {
+            tvBottomLike.setSelected(true);
+        }
+    }
+
+    /**
+     * 分享
+     */
+    @OnClick(R.id.fab_type_news_detail)
+    void onClickShare(){
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, mUrl);
+        startActivity(Intent.createChooser(intent, getString(R.string.share_info)));
     }
 
     @Override

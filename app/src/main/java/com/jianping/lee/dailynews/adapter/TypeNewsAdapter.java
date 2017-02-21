@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jianping.lee.dailynews.R;
-import com.jianping.lee.dailynews.engine.ImageLoader;
+import com.jianping.lee.dailynews.engine.ImageLoaderProxy;
 import com.jianping.lee.dailynews.model.http.HttpService;
 
 import java.util.List;
@@ -56,7 +56,7 @@ public class TypeNewsAdapter extends RecyclerView.Adapter<TypeNewsAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, final int position) {
         HttpService.Result.ResultBean.DataBean dataBean = mList.get(position);
 
-        ImageLoader.load(mContext, dataBean.getThumbnail_pic_s(), holder.ivImage);
+        ImageLoaderProxy.load(mContext, dataBean.getThumbnail_pic_s(), holder.ivImage);
         holder.tvTitle.setText(dataBean.getTitle());
         holder.tvAuthor.setText(dataBean.getAuthor_name());
         holder.tvDate.setText(dataBean.getDate());

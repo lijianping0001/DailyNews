@@ -7,19 +7,14 @@ import com.jianping.lee.dailynews.model.http.HttpService;
 import java.util.List;
 
 /**
- * Created by Li on 2017/2/14.
+ * Created by Li on 2017/2/21.
  */
-public interface TypeNewsContract {
+public interface NewsMainContract {
 
-    interface View extends BaseView{
-        void stopRefresh();
-
-        void showList(List<HttpService.Result.ResultBean.DataBean> listData);
-
-        void listGoTop();
+    interface View extends BaseView {
+        void showHideFab(boolean show);
     }
 
     interface Presenter extends BasePresenter<View> {
-        void getData(String type);
     }
 }

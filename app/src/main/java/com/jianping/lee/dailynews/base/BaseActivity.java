@@ -5,11 +5,15 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.jianping.lee.dailynews.R;
 import com.jianping.lee.dailynews.utils.LogUtils;
+import com.jianping.lee.dailynews.utils.ScreenUtils;
+import com.jianping.lee.dailynews.utils.StatusBarUtils;
 import com.jianping.lee.dailynews.utils.ToastUtils;
 
 import butterknife.ButterKnife;
@@ -38,6 +42,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends SupportActiv
     @Override
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
+        setStatusBar();
         ButterKnife.inject(this);
     }
 
@@ -127,5 +132,15 @@ public abstract class BaseActivity<T extends BasePresenter> extends SupportActiv
      */
     protected void showToast(int drawableId, String msg){
         ToastUtils.showToast(this, drawableId, msg);
+    }
+
+    /**
+     * 设置状态栏颜色
+     */
+    protected void setStatusBar(){
+        //不是全屏设置状态栏颜色
+        if (!ScreenUtils.isFullScreen(this)){
+            StatusBarUtils.setColorNoTranslucent(this, ContextCompat.getColor(this, R.color.primary));
+        }
     }
 }

@@ -6,4 +6,8 @@ package com.jianping.lee.dailynews.base;
 public class ConstConfig {
 
     public static boolean debugMode = true;
+
+    public static String NEWS_TO_TOP = "newsToTop";
+
+    public static String FAB_TOP_SHOW_HIDE = "fabTopShowHide";
 }

@@ -10,4 +10,9 @@
     <string name="app_desc">一款了解资讯的App</string>
     <string name="load_failed">当前网络不给力，请稍后再试</string>
     <string name="empty_data">没有获取到数据，请刷新后重试</string>
+
+    <string name="write_comment">写评论</string>
+    <string name="share">分享</string>
+    <string name="store">收藏</string>
+    <string name="share_info">分享文章到</string>
 </resources>
